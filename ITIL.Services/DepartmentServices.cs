@@ -20,13 +20,14 @@ namespace ITIL.Services
 		private IQueryable<DepartmentDto> GetListQuery()
 		{
 			return from department in db.DepartmentList
+				   join city in db.CityList on department.CityId equals city.Id
 				   select new DepartmentDto
 				   {
 					   Id = department.Id,
 					   TiTle = department.Title,
-					   CityTitle = department.City.ToString(),
+					   CityTitle = city.Title,
 					   CityId = department.CityId,
-					   DepartmentType = department.DepartmentType.ToString()
+					   DepartmentType = department.DepartmentType
 				   };
 		}
 		public async Task<IList<DepartmentDto>> GetAllAsync()
@@ -44,8 +45,8 @@ namespace ITIL.Services
 		{
 			var newEntity = new Department();
 			newEntity.Title = createDepartmentDto.TiTle;
-			newEntity.City = new City { Title = createDepartmentDto.CityTitle };
-			newEntity.DepartmentType = (DepartmentType)Enum.Parse(typeof(DepartmentType), createDepartmentDto.DepartmentType, true);
+			newEntity.CityId = createDepartmentDto.CityId;
+			newEntity.DepartmentType = createDepartmentDto.DepartmentType;
 			var result = db.DepartmentList.Add(newEntity);
 			if (cancellationToken.IsCancellationRequested)
 				return null;
@@ -58,18 +59,9 @@ namespace ITIL.Services
 			if (ediEntity != null)
 			{
 				ediEntity.Title = updateDepartmentDto.TiTle;
-				ediEntity.DepartmentType = (DepartmentType)Enum.Parse(typeof(DepartmentType), updateDepartmentDto.DepartmentType, true);
-				var existingCity = await db.CityList.FirstOrDefaultAsync(c => c.Title == updateDepartmentDto.CityTitle, cancellationToken);
-
-				if (existingCity != null)
-				{
-					ediEntity.City = existingCity;
-				}
-				else
-				{
-					ediEntity.City = new City { Title = updateDepartmentDto.CityTitle };
-				}
-				if (cancellationToken.IsCancellationRequested)
+                ediEntity.CityId = updateDepartmentDto.CityId;
+                ediEntity.DepartmentType = updateDepartmentDto.DepartmentType;
+                if (cancellationToken.IsCancellationRequested)
 					return false;
 				await db.SaveChangesAsync(cancellationToken);
 				return true;
