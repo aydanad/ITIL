@@ -19,7 +19,7 @@ namespace ITIL.Services.Contract
 	}
 	public class CreatePersonDto
 	{
-		public string? UserId { get; set; }
+		
 		public string FirstName { get; set; }
 
 		public string LastName { get; set; }
@@ -29,7 +29,7 @@ namespace ITIL.Services.Contract
 	public class UpdatePersonDto
 	{
 		public Guid Id { get; set; }
-		public string? UserId { get; set; }
+		
 		public string FirstName { get; set; }
 		public string LastName { get; set; }
 

@@ -41,7 +41,7 @@ namespace ITIL.Services
 		public async Task<Guid?> InsertAsync(CreatePersonDto createPersonDto,CancellationToken cancellationToken)
 		{
 			var newEntity = new Person();
-			newEntity.UserId = createPersonDto.UserId;
+			 
 			newEntity.FirstName=createPersonDto.FirstName;
 			newEntity.LastName=createPersonDto.LastName;
 			newEntity.NationalCode=createPersonDto.NationalCode;
@@ -56,7 +56,7 @@ namespace ITIL.Services
 			var ediEntity=db.PersonList.Where(t=>t.Id==updatePersonDto.Id).FirstOrDefault();
 			if (ediEntity != null)
 			{
-				ediEntity.UserId = updatePersonDto.UserId;
+				 
 				ediEntity.FirstName=updatePersonDto.FirstName;
 				ediEntity.LastName=updatePersonDto.LastName;
 				ediEntity.NationalCode = updatePersonDto.NationalCode;
