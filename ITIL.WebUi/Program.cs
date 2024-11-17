@@ -1,5 +1,13 @@
 var builder = WebApplication.CreateBuilder(args);
 
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
+    throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+
+ITIL.Infrastructure.InfrastructureServices.Configure(builder.Services, connectionString);
+
+ITIL.Services.ServiceDependency.Configure(builder.Services);
+
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
