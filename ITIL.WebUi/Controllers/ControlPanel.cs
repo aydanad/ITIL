@@ -22,7 +22,7 @@ namespace ITIL.WebUi.Controllers
             return View(cities);
         }
         [HttpGet]
-        public async Task<IActionResult> Remove(Guid id)
+        public async Task<IActionResult> RemoveCity(Guid id)
         {
             if (await _cityService.RemoveAsync(id, default))
             {
@@ -31,7 +31,7 @@ namespace ITIL.WebUi.Controllers
             return NotFound();
         }
         [HttpGet]
-        public async Task<IActionResult> UpdatePage(Guid id)
+        public async Task<IActionResult> UpdateCity(Guid id)
         {
             var city = await _cityService.GetAsync(id);
             if (city == null) return NotFound();
@@ -39,7 +39,7 @@ namespace ITIL.WebUi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdatePage(UpdateCityDto cityDto)
+        public async Task<IActionResult> UpdateCity(UpdateCityDto cityDto)
         {
             if (ModelState.IsValid)
             {
