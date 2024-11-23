@@ -25,8 +25,9 @@
                         <td>@city.Title</td>
                         <td>@city.DepartmentCount</td>
                         <td>
-                            <button>ویرایش</button>
-                            <button asp-action="Remove">حذف</button>
+
+                            <a  class="btn btn-info"   asp-action="UpdatePage" asp-route-id="@city.Id">ویرایش</a>
+                            <a  class="btn btn-danger" asp-action="Remove" asp-route-id="@city.Id">حذف</a>
                         </td>
                     </tr>
                 }

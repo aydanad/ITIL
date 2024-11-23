@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ITIL.Services.Contract.UpdateCityDto>
+﻿@model ITIL.Services.Contract.CityDto
 <div class="edit">
     <div class="edit-title">
         <h1>ویرایش</h1>
@@ -8,9 +8,9 @@
         @Html.AntiForgeryToken()
 
         <div class="edit-inputs">
-            <input type="number" name="Id" value="@Model.Id">
-            <input type="text" name="Name" id="name" value="@Model.Title">
-            <button asp-action="Update" >ویرایش</button>
+
+            <input type="text" name="Title" id="Title" value="@Model.Title">
+            <button asp-action="UpdatePage">ویرایش</button>
         </div>
     }
 </div>

@@ -16,9 +16,9 @@ namespace ITIL.Infrastructure.Config
 			builder.HasKey(t => t.Id);
 
 			builder.Property(t => t.Title).IsRequired().HasMaxLength(120);
-			builder.Property(t=>t.CityId).IsRequired(false).HasMaxLength(50);
-			builder.Property(t => t.City).IsRequired().HasMaxLength(120);
-			builder.Property(t => t.DepartmentType).IsRequired().HasMaxLength(50);
+			builder.Property(t=>t.CityId).IsRequired();
+			 
+			builder.Property(t => t.DepartmentType).IsRequired();
 		}
 	}
 }

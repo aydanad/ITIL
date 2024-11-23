@@ -21,7 +21,7 @@ namespace ITIL.WebUi.Controllers
             var cities = await _cityService.GetAllAsync();
             return View(cities);
         }
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> Remove(Guid id)
         {
             if (await _cityService.RemoveAsync(id, default))
@@ -39,7 +39,7 @@ namespace ITIL.WebUi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update(UpdateCityDto cityDto)
+        public async Task<IActionResult> UpdatePage(UpdateCityDto cityDto)
         {
             if (ModelState.IsValid)
             {
