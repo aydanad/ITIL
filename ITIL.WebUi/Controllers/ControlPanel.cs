@@ -1,5 +1,7 @@
-﻿using ITIL.Services.Contract;
+﻿using ITIL.Domin.Entities;
+using ITIL.Services.Contract;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace ITIL.WebUi.Controllers
 {
@@ -50,6 +52,26 @@ namespace ITIL.WebUi.Controllers
                 }
             }
             return View(cityDto);
+        }
+        [HttpGet]
+        public IActionResult CreateCity()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> CreateCity(CreateCityDto createCityDto)
+        {
+            if (ModelState.IsValid)
+            {
+                ModelState.AddModelError("Name", "این شهر قبلاً وجود دارد.");
+                return RedirectToAction(nameof(CreateCity));
+            }
+            else
+            {
+                await _cityService.InsertAsync(createCityDto, default);
+                return RedirectToAction(nameof(CityList));
+            }
+            return View(createCityDto);
         }
     }
 }

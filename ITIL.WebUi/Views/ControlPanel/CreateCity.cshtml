@@ -1,0 +1,9 @@
+﻿@model ITIL.Services.Contract.CreateCityDto
+
+<form asp-action="Create" method="post">
+    <div>
+        <label>نام شهر:</label>
+        <input asp-for="@Model.Title">
+    </div>
+    <button type="submit">اضافه کردن شهر</button>
+</form>
