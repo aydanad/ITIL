@@ -1,0 +1,39 @@
+﻿@model IEnumerable<ITIL.Services.Contract.CityDto>
+
+<!DOCTYPE html>  
+<html>  
+<head>  
+    <title>لیست شهرها</title>  
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">  
+</head>  
+<body>  
+    <div class="container">  
+        <h2 class="mt-4">لیست شهرها</h2>  
+        <table class="table table-bordered">  
+            <thead>  
+                <tr>  
+                    <th>شناسه</th>  
+                    <th>نام شهر</th>  
+                    <th>تعداد دپارتمان‌ها</th>  
+                </tr>  
+            </thead>  
+            <tbody>
+                @foreach (var city in Model)
+                {
+                    <tr>
+                        <td>@city.Id</td>
+                        <td>@city.Title</td>
+                        <td>@city.DepartmentCount</td>
+                        <td>
+                            <button>ویرایش</button>
+                            <button asp-action="Remove">حذف</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>  
+        
+
+    </div>  
+</body>  
+</html>

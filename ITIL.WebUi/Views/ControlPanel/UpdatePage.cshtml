@@ -1,0 +1,16 @@
+﻿@model IEnumerable<ITIL.Services.Contract.UpdateCityDto>
+<div class="edit">
+    <div class="edit-title">
+        <h1>ویرایش</h1>
+    </div>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="edit-inputs">
+            <input type="number" name="Id" value="@Model.Id">
+            <input type="text" name="Name" id="name" value="@Model.Title">
+            <button asp-action="Update" >ویرایش</button>
+        </div>
+    }
+</div>
