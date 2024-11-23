@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ITIL.Infrastructure\ITIL.Infrastructure.csproj" />
+    <ProjectReference Include="..\ITIL.Shared\ITIL.Shared.csproj" />
   </ItemGroup>
 
 </Project>

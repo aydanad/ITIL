@@ -1,0 +1,15 @@
+﻿@model ITIL.Services.Contract.CreateDepartmentDto
+<form asp-action="CreateDepartment" method="post">
+    <div>
+        <label asp-for="Title">نام دپارتمان</label>
+        <input asp-for="Title" asp-validation-for="Title">
+    </div>
+
+    <div>
+        <label asp-for="CityId">شهر</label>
+        @Html.DropDownListFor(model => model.CityId, (IEnumerable<SelectListItem>)ViewBag.Cities, "Please Select")
+        <span asp-validation-for="CityId"></span>
+    </div>
+
+    <button type="submit">ایجاد دپارتمان</button>
+</form>  

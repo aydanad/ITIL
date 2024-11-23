@@ -24,7 +24,7 @@ namespace ITIL.Services
 				   select new DepartmentDto
 				   {
 					   Id = department.Id,
-					   TiTle = department.Title,
+					   Title = department.Title,
 					   CityTitle = city.Title,
 					   CityId = department.CityId,
 					   DepartmentType = department.DepartmentType
@@ -44,7 +44,7 @@ namespace ITIL.Services
 		public async Task<Guid?> InsertAsyns(CreateDepartmentDto createDepartmentDto, CancellationToken cancellationToken)
 		{
 			var newEntity = new Department();
-			newEntity.Title = createDepartmentDto.TiTle;
+			newEntity.Title = createDepartmentDto.Title;
 			newEntity.CityId = createDepartmentDto.CityId;
 			newEntity.DepartmentType = createDepartmentDto.DepartmentType;
 			var result = db.DepartmentList.Add(newEntity);
@@ -58,7 +58,7 @@ namespace ITIL.Services
 			var ediEntity = db.DepartmentList.Where(t => t.Id == updateDepartmentDto.Id).FirstOrDefault();
 			if (ediEntity != null)
 			{
-				ediEntity.Title = updateDepartmentDto.TiTle;
+				ediEntity.Title = updateDepartmentDto.Title;
                 ediEntity.CityId = updateDepartmentDto.CityId;
                 ediEntity.DepartmentType = updateDepartmentDto.DepartmentType;
                 if (cancellationToken.IsCancellationRequested)

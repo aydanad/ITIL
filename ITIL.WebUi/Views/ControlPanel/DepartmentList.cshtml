@@ -1,0 +1,45 @@
+﻿@model IEnumerable<ITIL.Services.Contract.DepartmentDto>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>لیست دپارتمان</title>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <a class="btn btn-danger" asp-action="CreateDepartment">اضافه کردن</a>
+    <div class="container">
+        <h2 class="mt-4">لیست دپارتمان</h2>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>شناسه</th>
+                    <th>نام دپارتمان</th>
+                    <th>آیدی شهر</th>
+                    <th>نام شهر</th>
+                    <th>نوع دپارتمان</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var department in Model)
+                {
+                    <tr>
+                        <td>@department.Id</td>
+                        <td>@department.Title</td>
+                        <td>@department.CityId</td>
+                        <td>@department.CityTitle</td>
+                        <td>@department.DepartmentType</td>
+                        <td>
+
+                            <a class="btn btn-info" asp-action="UpdateDepartment" asp-route-id="@department.Id">ویرایش</a>
+                            <a class="btn btn-danger" asp-action="RemoveDepartment" asp-route-id="@department.Id">حذف</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+
+    </div>
+</body>
+</html>
