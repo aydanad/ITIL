@@ -1,10 +1,15 @@
-﻿namespace ITIL.Shared
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ITIL.Shared
 {
     public enum DepartmentType:short
     {
+        [Display(Name ="هیچکدام")]
         None = 0,
-        Hospital=1,
-        HealthCenter=2
+        [Display(Name = "بیمارستان")]
+        Hospital =1,
+        [Display(Name = "مرکز بهداشت")]
+        HealthCenter =2
 
     }
 }

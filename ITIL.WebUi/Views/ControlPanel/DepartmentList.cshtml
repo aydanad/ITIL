@@ -13,9 +13,8 @@
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th>شناسه</th>
-                    <th>نام دپارتمان</th>
-                    <th>آیدی شهر</th>
+                   <th>نام دپارتمان</th>
+                    
                     <th>نام شهر</th>
                     <th>نوع دپارتمان</th>
                 </tr>
@@ -24,9 +23,9 @@
                 @foreach (var department in Model)
                 {
                     <tr>
-                        <td>@department.Id</td>
+                      
                         <td>@department.Title</td>
-                        <td>@department.CityId</td>
+                        
                         <td>@department.CityTitle</td>
                         <td>@department.DepartmentType</td>
                         <td>

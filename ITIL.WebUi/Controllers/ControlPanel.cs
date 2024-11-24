@@ -130,7 +130,7 @@ namespace ITIL.WebUi.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateDepartment(CreateDepartmentDto createDepartmentDto)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 await _departmentServices.InsertAsync(createDepartmentDto, default);
                 return RedirectToAction(nameof(DepartmentList));

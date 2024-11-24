@@ -2,21 +2,26 @@
 <form asp-action="CreateDepartment" method="post">
     <div>
         <label asp-for="Title">نام دپارتمان</label>
-        <input asp-for="Title" asp-validation-for="Title">
+        <input asp-for="Title" asp-validation-for="Title" class="form-control">
+        <span asp-validation-for="Title"></span>
     </div>
 
     <div class="row">
-        <div class="col-12">
+        <div class="col-6">
             <label asp-for="CityId">شهر</label>
-            @Html.DropDownListFor(model => model.CityId, (IEnumerable<SelectListItem>)ViewBag.Cities, "Please Select")
+            @Html.DropDownListFor(model => model.CityId, (IEnumerable<SelectListItem>)ViewBag.Cities, "Please Select",new {@class="form-select"})
             <span asp-validation-for="CityId"></span>
         </div>
-        <div class="col-12">
-            <label asp-for="CityId">نوع واحد</label>
-            @Html.DropDownListFor(model => model.CityId, Html.GetEnumSelectList<ITIL.Shared.DepartmentType>(), "Please Select")
-            <span asp-validation-for="CityId"></span>
+        <div class="col-6">
+            <label asp-for="DepartmentType">نوع واحد</label>
+            @Html.DropDownListFor(model => model.DepartmentType, Html.GetEnumSelectList<ITIL.Shared.DepartmentType>(), "Please Select", new { @class = "form-select" })
+            <span asp-validation-for="DepartmentType"></span>
         </div>
     </div>
-
-    <button type="submit">ایجاد دپارتمان</button>
+    <div class="row mt-1">
+        <div class="col-12">
+        <button type="submit">ایجاد دپارتمان</button>
+        </div>
+    </div>
+    
 </form>  

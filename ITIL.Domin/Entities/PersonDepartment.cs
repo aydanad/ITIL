@@ -6,5 +6,10 @@
         public Person Person {  get; set; }
         public Guid DepartmentId { get; set; }
         public Department Department { get; set; }
+
+        public bool IsBossOffice {  get; set; }
+         
+
+
     }
 }
