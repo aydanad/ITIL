@@ -5,10 +5,17 @@
         <input asp-for="Title" asp-validation-for="Title">
     </div>
 
-    <div>
-        <label asp-for="CityId">شهر</label>
-        @Html.DropDownListFor(model => model.CityId, (IEnumerable<SelectListItem>)ViewBag.Cities, "Please Select")
-        <span asp-validation-for="CityId"></span>
+    <div class="row">
+        <div class="col-12">
+            <label asp-for="CityId">شهر</label>
+            @Html.DropDownListFor(model => model.CityId, (IEnumerable<SelectListItem>)ViewBag.Cities, "Please Select")
+            <span asp-validation-for="CityId"></span>
+        </div>
+        <div class="col-12">
+            <label asp-for="CityId">نوع واحد</label>
+            @Html.DropDownListFor(model => model.CityId, Html.GetEnumSelectList<ITIL.Shared.DepartmentType>(), "Please Select")
+            <span asp-validation-for="CityId"></span>
+        </div>
     </div>
 
     <button type="submit">ایجاد دپارتمان</button>

@@ -41,7 +41,7 @@ namespace ITIL.Services
 			return await query.FirstOrDefaultAsync();
 		}
 
-		public async Task<Guid?> InsertAsyns(CreateDepartmentDto createDepartmentDto, CancellationToken cancellationToken)
+		public async Task<Guid?> InsertAsync(CreateDepartmentDto createDepartmentDto, CancellationToken cancellationToken)
 		{
 			var newEntity = new Department();
 			newEntity.Title = createDepartmentDto.Title;
@@ -81,5 +81,7 @@ namespace ITIL.Services
 			}
 			return false;
 		}
-	}
+
+        
+    }
 }

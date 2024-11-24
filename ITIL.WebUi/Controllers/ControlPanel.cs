@@ -123,16 +123,8 @@ namespace ITIL.WebUi.Controllers
         public async Task<IActionResult> CreateDepartment()
         {
             var cities = await _cityService.GetAllAsync();
-            ViewBag.Cities = new SelectList(cities, "Title");
-            var departmentTypes = Enum.GetValues(typeof(DepartmentType))
-                              .Cast<DepartmentType>()
-                              .Select(e => new SelectListItem
-                              {
-                                  Value = e.ToString(),
-                                  Text = e.ToString() 
-                              }).ToList();
-
-            ViewBag.DepartmentTypes = departmentTypes;
+            //ViewBag.Cities = cities.Select(t => new SelectListItem(t.Title,t.Id+string.Empty));
+            ViewBag.Cities =new SelectList( cities, "Id" ,"Title");
             return View();
         }
         [HttpPost]
