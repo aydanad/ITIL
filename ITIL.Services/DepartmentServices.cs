@@ -81,7 +81,12 @@ namespace ITIL.Services
 			}
 			return false;
 		}
+        public async Task<bool> ExistsAsync(string departmentTitle,Guid cityId, DepartmentType departmentType)
+        {
+            return await db.DepartmentList
+				.Where(c => c.Title == departmentTitle && c.CityId==cityId && c.DepartmentType==departmentType).AnyAsync();
+        }
 
-        
+
     }
 }

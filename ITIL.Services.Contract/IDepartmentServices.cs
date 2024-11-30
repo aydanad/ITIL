@@ -1,4 +1,5 @@
 ﻿
+using ITIL.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,7 @@ namespace ITIL.Services.Contract
 		Task<Guid?> InsertAsync(CreateDepartmentDto createDepartmentDto, CancellationToken cancellationToken);
 		Task<bool> UpdateAsync(UpdateDepartmentDto updateDepartmentDto, CancellationToken cancellationToken);
 		Task<bool> RemoveAsync(Guid id, CancellationToken cancellationToken);
-	}
+		Task<bool> ExistsAsync(string departmentTitle, Guid cityId, DepartmentType departmentType);
+
+    }
 }

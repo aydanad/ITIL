@@ -1,6 +1,12 @@
 ﻿@model ITIL.Services.Contract.CreateCityDto
-
-<form asp-action="Create" method="post">
+@{
+    var errorMessage = TempData["ErrorMessage"];
+}
+@if (!string.IsNullOrEmpty(errorMessage?.ToString()))
+{
+    <div class="alert alert-danger">@errorMessage</div>
+}
+<form asp-action="CreateCity" method="post">
     <div>
         <label>نام شهر:</label>
         <input asp-for="@Model.Title">

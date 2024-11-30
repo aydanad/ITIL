@@ -1,5 +1,7 @@
 ﻿@model IEnumerable<ITIL.Services.Contract.CityDto>
-
+@{
+    var errorMessage = TempData["ErrorMessage"];
+}
 <!DOCTYPE html>  
 <html>  
 <head>  
@@ -8,6 +10,11 @@
 </head>  
 <body>
     <a class="btn btn-danger" asp-action="CreateCity">اضافه کردن</a>
+
+    @if (!string.IsNullOrEmpty(errorMessage?.ToString()))
+    {
+        <div class="alert alert-danger">@errorMessage</div>
+    }
     <div class="container">  
         <h2 class="mt-4">لیست شهرها</h2>  
         <table class="table table-bordered">  
@@ -28,7 +35,7 @@
                         <td>
 
                             <a class="btn btn-info" asp-action="UpdateCity" asp-route-id="@city.Id">ویرایش</a>
-                            <a class="btn btn-danger" asp-action="RemoveCity" asp-route-id="@city.Id">حذف</a>
+                            <a class="btn btn-danger" asp-action="RemoveCity" asp-route-id="@city.Id" asp-route-departmentCount="@city.DepartmentCount">حذف</a>
                         </td>
                     </tr>
                 }

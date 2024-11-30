@@ -1,0 +1,27 @@
+﻿@model ITIL.Services.Contract.DepartmentDto
+<form asp-action="UpdateDepartment" method="post">
+    <div>
+        <label asp-for="Title">نام دپارتمان</label>
+        <input name="Title" id="Title" value="@Model.Title" class="form-control">
+        <span asp-validation-for="Title"></span>
+    </div>
+
+    <div class="row">
+        <div class="col-6">
+            <label asp-for="CityId">شهر</label>
+            @Html.DropDownListFor(model => model.CityId, (IEnumerable<SelectListItem>)ViewBag.Cities, "Please Select", new { @class = "form-select" })
+            <span name="CityId" id="CityId" value="@Model.CityId"></span>
+        </div>
+        <div class="col-6">
+            <label asp-for="DepartmentType">نوع واحد</label>
+            @Html.DropDownListFor(model => model.DepartmentType, Html.GetEnumSelectList<ITIL.Shared.DepartmentType>(), "Please Select", new { @class = "form-select" })
+            <span name="DepartmentType" id="DepartmentType" value="@Model.DepartmentType"></span>
+        </div>
+    </div>
+    <div class="row mt-1">
+        <div class="col-12">
+        <button type="submit">ویرایش دپارتمان</button>
+        </div>
+    </div>
+
+</form>  

@@ -75,5 +75,9 @@ namespace ITIL.Services
             }
             return false;
         }
+        public async Task<bool> ExistsAsync(string cityTitle)
+        {
+            return await db.CityList.Where(c => c.Title== cityTitle).AnyAsync();
+        }
     }
 }

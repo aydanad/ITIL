@@ -1,0 +1,23 @@
+﻿@model ITIL.Services.Contract.PersonDto
+
+<div class="edit">
+    <div class="edit-title">
+        <h1>ویرایش</h1>
+    </div>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="edit-inputs">
+            <div class="col-6">
+                <label asp-for="FirstName">نام :</label>
+                <input type="text" name="FirstName" id="FirstName" value="@Model.FirstName">
+                <label asp-for="LastName">نام خانوادگی :</label>
+                <input type="text" name="LastName" id="LastName" value="@Model.LastName">
+                <label asp-for="NationalCode">کد ملی:</label>
+                <input type="text" name="NationalCode" id="NationalCode" value="@Model.NationalCode">
+            </div>
+            <button asp-action="UpdatePerson">ویرایش</button>
+        </div>
+    }
+</div>

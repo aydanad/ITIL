@@ -103,6 +103,9 @@ namespace ITIL.Infrastructure.Migrations
                     b.Property<Guid>("DepartmentId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool>("IsBossOffice")
+                        .HasColumnType("bit");
+
                     b.Property<Guid>("PersonId")
                         .HasColumnType("uniqueidentifier");
 

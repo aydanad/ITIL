@@ -13,5 +13,7 @@ namespace ITIL.Services.Contract
 		Task<Guid?> InsertAsync(CreatePersonDto createPersonDto, CancellationToken cancellationToken);
 		Task<bool> UpdateAsync(UpdatePersonDto updatePersonDto, CancellationToken cancellationToken);
 		Task<bool> RemoveAsync(Guid id, CancellationToken cancellationToken);
-	}
+		Task<bool> ExistsAsync(string nationalCode);
+
+    }
 }

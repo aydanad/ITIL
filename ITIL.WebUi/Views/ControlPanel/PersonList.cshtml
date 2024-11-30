@@ -1,0 +1,52 @@
+﻿@model IEnumerable<ITIL.Services.Contract.PersonDto>
+@{
+    var errorMessage = TempData["ErrorMessage"];
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>لیست اشخاص</title>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <a class="btn btn-danger" asp-action="CreatePerson">اضافه کردن</a>
+
+    @if (!string.IsNullOrEmpty(errorMessage?.ToString()))
+    {
+        <div class="alert alert-danger">@errorMessage</div>
+    }
+    <div class="container">
+        <h2 class="mt-4">لیست اشخاص</h2>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>شناسه</th>
+                    <th>نام</th>
+                    <th>نام خانوادگی</th>
+                    <th>کدملی</th>
+                    <th>تعداد دپارتمان‌ها</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var person in Model)
+                {
+                    <tr>
+                        <td>@person.Id</td>
+                        <td>@person.FirstName</td>
+                        <td>@person.LastName</td>
+                        <td>@person.NationalCode</td>
+                        <td>@person.PersonDepartmentCount</td>
+                        <td>
+
+                            <a class="btn btn-info" asp-action="UpdatePerson" asp-route-id="@person.Id">ویرایش</a>
+                            <a class="btn btn-danger" asp-action="RemovePerson" asp-route-id="@person.Id">حذف</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+
+    </div>
+</body>
+</html>

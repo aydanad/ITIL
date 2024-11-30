@@ -28,12 +28,21 @@ namespace ITIL.WebUi.Controllers
             return View(cities);
         }
         [HttpGet]
-        public async Task<IActionResult> RemoveCity(Guid id)
+        public async Task<IActionResult> RemoveCity(Guid id, int departmentCount)
         {
-            if (await _cityService.RemoveAsync(id, default))
+            if (departmentCount == 0)
             {
+                if (await _cityService.RemoveAsync(id, default))
+                {
+                    return RedirectToAction(nameof(CityList));
+                }
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "برای این شهر دپارتمان وجود دارد.";
                 return RedirectToAction(nameof(CityList));
             }
+
             return NotFound();
         }
         [HttpGet]
@@ -47,8 +56,14 @@ namespace ITIL.WebUi.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateCity(UpdateCityDto cityDto)
         {
+
             if (ModelState.IsValid)
             {
+                bool cityExists = await _cityService.ExistsAsync(cityDto.Title);
+                if (cityExists)
+                {
+                    return View(cityDto);
+                }
                 var result = await _cityService.UpdateAsync(cityDto, default);
                 if (result)
                 {
@@ -65,15 +80,16 @@ namespace ITIL.WebUi.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateCity(CreateCityDto createCityDto)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
+                bool cityExists = await _cityService.ExistsAsync(createCityDto.Title);
+                if (cityExists)
+                {
+                    TempData["ErrorMessage"] = "این شهر وجود دارد.";
+                    return RedirectToAction(nameof(CreateCity));
+                }
                 await _cityService.InsertAsync(createCityDto, default);
                 return RedirectToAction(nameof(CityList));
-            }
-            else
-            {
-                ModelState.AddModelError("Title", "این شهر قبلاً وجود دارد.");
-                return RedirectToAction(nameof(CreateCity));
             }
             return View(createCityDto);
         }
@@ -92,17 +108,20 @@ namespace ITIL.WebUi.Controllers
         [HttpGet]
         public async Task<IActionResult> RemoveDepartment(Guid id)
         {
-            if (await _cityService.RemoveAsync(id, default))
-            {
-                return RedirectToAction(nameof(DepartmentList));
-            }
-            return NotFound();
+                if (await _departmentServices.RemoveAsync(id, default))
+                {
+                    return RedirectToAction(nameof(DepartmentList));
+                }
+
+                return NotFound();
         }
         [HttpGet]
         public async Task<IActionResult> UpdateDepartment(Guid id)
         {
             var departments = await _departmentServices.GetAsync(id);
             if (departments == null) return NotFound();
+            var cities = await _cityService.GetAllAsync();
+            ViewBag.Cities = new SelectList(cities, "Id", "Title");
             return View(departments);
         }
 
@@ -132,15 +151,82 @@ namespace ITIL.WebUi.Controllers
         {
             if (ModelState.IsValid)
             {
+                bool departmentExists = await _departmentServices.ExistsAsync(createDepartmentDto.Title, createDepartmentDto.CityId, createDepartmentDto.DepartmentType);
+                if (departmentExists)
+                {
+                    TempData["ErrorMessage"] = "این دپارتمان قبلاً وجود دارد.";
+                    return RedirectToAction(nameof(CreateDepartment));
+
+                }
                 await _departmentServices.InsertAsync(createDepartmentDto, default);
                 return RedirectToAction(nameof(DepartmentList));
             }
-            else
-            {
-                ModelState.AddModelError("Title", "این دپارتمان قبلاً وجود دارد.");
-                return RedirectToAction(nameof(CreateDepartment));
-            }
             return View(createDepartmentDto);
+        }
+
+
+
+
+
+
+
+        public async Task<IActionResult> PersonList()
+        {
+            var people = await _personService.GetAllAsync();
+            return View(people);
+        }
+        [HttpGet]
+        public async Task<IActionResult> RemovePerson(Guid id)
+        {
+                if (await _personService.RemoveAsync(id, default))
+                {
+                    return RedirectToAction(nameof(PersonList));
+                }
+
+            return NotFound();
+        }
+        [HttpGet]
+        public async Task<IActionResult> UpdatePerson(Guid id)
+        {
+            var person = await _personService.GetAsync(id);
+            if (person == null) return NotFound();
+            return View(person);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdatePerson(UpdatePersonDto updatePersonDto)
+        {
+
+            if (ModelState.IsValid)
+            {
+                var result = await _personService.UpdateAsync(updatePersonDto, default);
+                if (result)
+                {
+                    return RedirectToAction(nameof(PersonList));
+                }
+            }
+            return View(updatePersonDto);
+        }
+        [HttpGet]
+        public IActionResult CreatePerson()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> CreatePerson(CreatePersonDto createPersonDto)
+        {
+            if (ModelState.IsValid)
+            {
+                bool personExists = await _personService.ExistsAsync(createPersonDto.NationalCode);
+                if (personExists)
+                {
+                    TempData["ErrorMessage"] = "این شخص وجود دارد.";
+                    return RedirectToAction(nameof(CreatePerson));
+                }
+                await _personService.InsertAsync(createPersonDto, default);
+                return RedirectToAction(nameof(PersonList));
+            }
+            return View(createPersonDto);
         }
     }
 }

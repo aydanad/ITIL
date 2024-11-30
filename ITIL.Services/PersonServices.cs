@@ -80,5 +80,9 @@ namespace ITIL.Services
 			}
 			return false;
 		}
-	}
+        public async Task<bool> ExistsAsync(string nationalCode)
+        {
+            return await db.PersonList.Where(c => c.NationalCode == nationalCode).AnyAsync();
+        }
+    }
 }
