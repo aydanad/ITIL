@@ -10,10 +10,17 @@
     <div class="col-6">
         <label asp-for="FirstName">نام :</label>
         <input asp-for="@Model.FirstName">
+        <span class="text-danger" asp-validation-for="FirstName"></span>
+    </div>
+    <div class="col-6">
         <label asp-for="LastName">نام خانوادگی :</label>
         <input asp-for="@Model.LastName">
+        <span class="text-danger" asp-validation-for="LastName"></span>
+    </div>
+    <div class="col-6">
         <label asp-for="NationalCode">کد ملی:</label>
         <input type="text" maxlength="10" asp-for="@Model.NationalCode">
+        <span class="text-danger" asp-validation-for="NationalCode"></span>
     </div>
     <button type="submit">اضافه کردن </button>
 </form>

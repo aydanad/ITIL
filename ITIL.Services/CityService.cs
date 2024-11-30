@@ -39,6 +39,9 @@ namespace ITIL.Services
         }
         public async Task<Guid?> InsertAsync(CreateCityDto createCityDto, CancellationToken cancellationToken)
         {
+            bool isDuplicate = db.CityList.Any(t => t.Title == createCityDto.Title);
+            if (isDuplicate)
+                throw new Exception("City Is Duplicate");
             var newEntity = new City();
             newEntity.Title = createCityDto.Title;
             var result = db.CityList.Add(newEntity);
@@ -46,9 +49,16 @@ namespace ITIL.Services
                 return null;
             await db.SaveChangesAsync(cancellationToken);
             return result.Entity.Id;
+
+
+
         }
         public async Task<bool> UpdateAsync(UpdateCityDto updateCityDto, CancellationToken cancellationToken)
         {
+            bool isDuplicate = db.CityList.Any(t => t.Title == updateCityDto.Title && t.Id != updateCityDto.Id);
+
+            if (isDuplicate)
+                throw new Exception("City Is Duplicate");
             var ediEntity = db.CityList.Where(t => t.Id == updateCityDto.Id).FirstOrDefault();
             if (ediEntity != null)
             {

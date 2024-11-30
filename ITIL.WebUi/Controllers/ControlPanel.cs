@@ -50,7 +50,12 @@ namespace ITIL.WebUi.Controllers
         {
             var city = await _cityService.GetAsync(id);
             if (city == null) return NotFound();
-            return View(city);
+            var updateDto = new UpdateCityDto
+            {
+                Id = city.Id,
+                Title = city.Title
+            };
+            return View(updateDto);
         }
 
         [HttpPost]
@@ -59,15 +64,17 @@ namespace ITIL.WebUi.Controllers
 
             if (ModelState.IsValid)
             {
-                bool cityExists = await _cityService.ExistsAsync(cityDto.Title);
-                if (cityExists)
+                try
                 {
-                    return View(cityDto);
+                    var result = await _cityService.UpdateAsync(cityDto, default);
+                    if (result)
+                    {
+                        return RedirectToAction(nameof(CityList));
+                    }
                 }
-                var result = await _cityService.UpdateAsync(cityDto, default);
-                if (result)
+                catch (Exception ex)
                 {
-                    return RedirectToAction(nameof(CityList));
+                    ModelState.AddModelError(nameof(UpdateCityDto.Title), ex.Message);
                 }
             }
             return View(cityDto);
