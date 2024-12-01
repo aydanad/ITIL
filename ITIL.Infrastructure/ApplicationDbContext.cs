@@ -31,7 +31,8 @@ namespace ITIL.Infrastructure
         public DbSet<City> CityList { get; set; }
         public DbSet<Department> DepartmentList { get; set; }
         public DbSet<Person> PersonList { get; set; }
+        public DbSet<PersonDepartment> PersonDepartmentList { get; set; }
 
-         
+
     }
 }

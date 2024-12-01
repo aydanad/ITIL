@@ -235,5 +235,10 @@ namespace ITIL.WebUi.Controllers
             }
             return View(createPersonDto);
         }
+        public IActionResult PersonDepartmentList()
+        {
+            return View();
+        }
+
     }
 }

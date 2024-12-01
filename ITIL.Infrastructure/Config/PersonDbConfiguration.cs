@@ -22,9 +22,6 @@ namespace ITIL.Infrastructure.Config
             builder.Property(t => t.NationalCode).IsRequired().HasMaxLength(10);
             builder.Property(t => t.FirstName).IsRequired().HasMaxLength(120).IsUnicode();
             builder.Property(t => t.LastName).IsRequired().HasMaxLength(120).IsUnicode();
-             
-
-
         }
     }
 }
