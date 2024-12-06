@@ -4,6 +4,7 @@ using ITIL.Shared;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 
 namespace ITIL.WebUi.Controllers
 {
@@ -12,11 +13,13 @@ namespace ITIL.WebUi.Controllers
         private readonly IPersonServices _personService;
         private readonly ICityService _cityService;
         private readonly IDepartmentServices _departmentServices;
-        public ControlPanel(IPersonServices personService,ICityService cityService, IDepartmentServices departmentServices)
+        private readonly IPersonDepartmentServices _personDepartmentServices;
+        public ControlPanel(IPersonServices personService,ICityService cityService, IDepartmentServices departmentServices, IPersonDepartmentServices personDepartmentServices)
         {
             _personService = personService;
             _cityService = cityService;
             _departmentServices = departmentServices;
+            _personDepartmentServices = personDepartmentServices;
         }
         public IActionResult Index()
         {
@@ -235,9 +238,68 @@ namespace ITIL.WebUi.Controllers
             }
             return View(createPersonDto);
         }
-        public IActionResult PersonDepartmentList()
+
+
+
+
+
+        public async Task<IActionResult> PersonDepartmentList(Guid id)
         {
+            ViewBag.PersonId = id;
+            var personDepartments = await _personDepartmentServices.GetAllAsync(id);
+            return View(personDepartments);
+        }
+        public async Task<IActionResult> RemovePersonDepartment(Guid id, Guid personid)
+        {
+            if (await _personDepartmentServices.RemoveAsync(id, default))
+            {
+                return RedirectToAction(nameof(PersonDepartmentList), new { id = personid });
+            }
+
+            return NotFound();
+        }
+        [HttpGet]
+        public async Task<IActionResult> UpdatePersonDepartment(Guid id, Guid personid)
+        {
+            var personDepartment = await _personDepartmentServices.GetAsync(id);
+            if (personDepartment == null) return NotFound();
+            var departments = await _departmentServices.GetAllAsync();
+            ViewBag.Departments = new SelectList(departments, "Id", "Title");
+            ViewBag.PersonId = personid;
+            return View(personDepartment);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdatePersonDepartment(UpdatePersonDepartmentDto updatePersonDepartmentDto)
+        {
+
+            if (ModelState.IsValid)
+            {
+                var result = await _personDepartmentServices.UpdateAsync(updatePersonDepartmentDto, default);
+                if (result)
+                {
+                    return RedirectToAction(nameof(PersonDepartmentList), new { id = updatePersonDepartmentDto.PersonId });
+                }
+            }
+            return View(updatePersonDepartmentDto);
+        }
+        [HttpGet]
+        public async Task<IActionResult> CreatePersonDepartment(Guid id)
+        {
+            var departments = await _departmentServices.GetAllAsync();
+            ViewBag.Departments = new SelectList(departments, "Id", "Title");
+            ViewBag.PersonId = id;
             return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> CreatePersonDepartment(CreatePersonDepartmentDto createPersonDepartmentDto)
+        {
+            if (ModelState.IsValid)
+            {
+                await _personDepartmentServices.InsertAsync(createPersonDepartmentDto, default);
+                return RedirectToAction(nameof(PersonDepartmentList), new { id = createPersonDepartmentDto.PersonId });
+            }
+            return View(createPersonDepartmentDto);
         }
 
     }

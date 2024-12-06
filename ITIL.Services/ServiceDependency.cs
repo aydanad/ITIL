@@ -15,6 +15,7 @@ namespace ITIL.Services
             services.AddScoped<ICityService, CityService>();
             services.AddScoped<IDepartmentServices, DepartmentServices>();
             services.AddScoped<IPersonServices, PersonServices>();
+            services.AddScoped<IPersonDepartmentServices, PersonDepartmentServices>();
         }
     }
 }

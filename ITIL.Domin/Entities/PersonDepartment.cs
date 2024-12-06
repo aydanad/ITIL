@@ -8,8 +8,5 @@
         public Department Department { get; set; }
 
         public bool IsBossOffice {  get; set; }
-         
-
-
     }
 }

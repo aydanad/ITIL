@@ -1,0 +1,37 @@
+﻿@model ITIL.Services.Contract.PersonDepartmentDto
+@{
+    var errorMessage = TempData["ErrorMessage"];
+}
+@if (!string.IsNullOrEmpty(errorMessage?.ToString()))
+{
+    <div class="alert alert-danger">@errorMessage</div>
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>لیست اشخاص</title>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <form asp-action="UpdatePersonDepartment" method="post">
+        <div class="row">
+            <div class="col-6">
+                <label asp-for="DepartmentId">دپارتمان</label>
+                @Html.DropDownListFor(model => model.DepartmentId, (IEnumerable<SelectListItem>)ViewBag.Departments, "Please Select", new { @class = "form-select" })
+                <span name="DepartmentId" id="DepartmentId" asp-validation-for="DepartmentId" value="@Model.DepartmentId"></span>
+            </div>
+            <div class="col-6">
+                <label asp-for="IsBossOffice">سمت:</label>
+                <input type="checkbox" asp-for="IsBossOffice" id="IsBossOffice" onclick="event.stopPropagation();" />
+            </div>
+            <input type="hidden" id="PersonId" asp-for="PersonId" value="@ViewBag.PersonId" />
+        </div>
+        <div class="row mt-1">
+            <div class="col-12">
+                <button type="submit">ویرایش دپارتمان</button>
+            </div>
+        </div>
+
+    </form>
+</body>
+</html>

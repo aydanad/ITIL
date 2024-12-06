@@ -21,10 +21,6 @@ namespace ITIL.Infrastructure.Config
             builder.Property(t => t.PersonId).IsRequired();
             builder.Property(t => t.DepartmentId).IsRequired();
             builder.Property(t => t.IsBossOffice).IsRequired();
-            builder.HasOne(d => d.Person) 
-                            .WithMany(p => p.PersonDepartmentList) 
-                            .HasForeignKey(d => d.PersonId)
-                            .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

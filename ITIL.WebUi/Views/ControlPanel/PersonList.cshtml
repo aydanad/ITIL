@@ -30,7 +30,7 @@
             <tbody>
                 @foreach (var person in Model)
                 {
-                    <tr>
+                    <tr @* onclick="window.location='@Url.Action("PersonDepartmentList", new { id = person.Id })'" style="cursor: pointer;" *@>
                         <td>@person.Id</td>
                         <td>@person.FirstName</td>
                         <td>@person.LastName</td>
@@ -40,6 +40,7 @@
 
                             <a class="btn btn-info" asp-action="UpdatePerson" asp-route-id="@person.Id">ویرایش</a>
                             <a class="btn btn-danger" asp-action="RemovePerson" asp-route-id="@person.Id">حذف</a>
+                            <a class="btn btn-danger" asp-action="PersonDepartmentList" asp-route-id="@person.Id">list</a>
                         </td>
                     </tr>
                 }

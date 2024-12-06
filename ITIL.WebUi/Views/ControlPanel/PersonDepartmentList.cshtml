@@ -1,1 +1,49 @@
-﻿
+﻿@model IEnumerable<ITIL.Services.Contract.PersonDepartmentDto>
+@{
+    var errorMessage = TempData["ErrorMessage"];
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>لیست اشخاص</title>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+	<a class="btn btn-danger" asp-action="CreatePersonDepartment" asp-route-id="@ViewBag.PersonId">اضافه کردن</a>
+
+	@if (!string.IsNullOrEmpty(errorMessage?.ToString()))
+	{
+		<div class="alert alert-danger">@errorMessage</div>
+	}
+	<div class="container">
+		<h2 class="mt-4">لیست دپارتمان افراد</h2>
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th>شناسه</th>
+					<th>نام شخص</th>
+					<th>دپارتمان</th>
+					<th>سمت</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var personDepartment in Model)
+				{
+					<tr>
+						<td>@personDepartment.Id</td>
+						<td>@personDepartment.PersonFullName</td>
+						<td>@personDepartment.DepartmentTitle</td>
+						<td>@personDepartment.IsBossOffice</td>
+						<td>
+							<a class="btn btn-info" asp-action="UpdatePersonDepartment" asp-route-personid="@ViewBag.PersonId" asp-route-id="@personDepartment.Id">ویرایش</a>
+							<a class="btn btn-danger" asp-action="RemovePersonDepartment" asp-route-personid="@ViewBag.PersonId" asp-route-id="@personDepartment.Id">حذف</a>
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+
+
+	</div>
+</body>
+</html>
