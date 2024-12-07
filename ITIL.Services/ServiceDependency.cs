@@ -1,8 +1,10 @@
-﻿using ITIL.Services.Contract;
+﻿using FluentValidation;
+using ITIL.Services.Contract;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,6 +14,8 @@ namespace ITIL.Services
     {
         public static void Configure(this IServiceCollection services)
         {
+            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+            
             services.AddScoped<ICityService, CityService>();
             services.AddScoped<IDepartmentServices, DepartmentServices>();
             services.AddScoped<IPersonServices, PersonServices>();

@@ -1,4 +1,5 @@
-﻿using ITIL.Domin.Entities;
+﻿using FluentValidation;
+using ITIL.Domin.Entities;
 using ITIL.Services.Contract;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -11,11 +12,13 @@ namespace ITIL.Services
 {
     public class CityService : ICityService
     {
+        readonly IValidator<CreateCityDto> createValidator;
         IApplicationDbContext db;
-        public CityService(IApplicationDbContext dbContext)
+        public CityService(IApplicationDbContext dbContext, IValidator<CreateCityDto> createValidator)
         {
 
             db = dbContext;
+            this.createValidator = createValidator;
         }
         private IQueryable<CityDto> getListQuery()
         {
@@ -39,18 +42,22 @@ namespace ITIL.Services
         }
         public async Task<Guid?> InsertAsync(CreateCityDto createCityDto, CancellationToken cancellationToken)
         {
-            bool isDuplicate = db.CityList.Any(t => t.Title == createCityDto.Title);
-            if (isDuplicate)
-                throw new Exception("City Is Duplicate");
-            var newEntity = new City();
-            newEntity.Title = createCityDto.Title;
-            var result = db.CityList.Add(newEntity);
-            if (cancellationToken.IsCancellationRequested)
-                return null;
-            await db.SaveChangesAsync(cancellationToken);
-            return result.Entity.Id;
-
-
+            var valResult=await createValidator.ValidateAsync(createCityDto);
+            if (valResult.IsValid)
+            {
+                var newEntity = new City();
+                newEntity.Title = createCityDto.Title;
+                var result = db.CityList.Add(newEntity);
+                if (cancellationToken.IsCancellationRequested)
+                    return null;
+                await db.SaveChangesAsync(cancellationToken);
+                return result.Entity.Id;
+            }
+            else
+            {
+               // throw exception
+               return null;
+            }
 
         }
         public async Task<bool> UpdateAsync(UpdateCityDto updateCityDto, CancellationToken cancellationToken)
