@@ -17,22 +17,7 @@ namespace ITIL.Services
 
             db = dbContext;
         }
-        private IQueryable<PersonDepartmentDto> getListQuery(Guid id)
-        {
-            return from personDepartment in db.PersonDepartmentList
-                   join person in db.PersonList on personDepartment.PersonId equals person.Id
-                   join department in db.DepartmentList on personDepartment.DepartmentId equals department.Id
-                   where personDepartment.PersonId==id
-                   select new PersonDepartmentDto
-                   {
-                       Id = personDepartment.Id,
-                       PersonId=personDepartment.PersonId,
-                       DepartmentId=personDepartment.DepartmentId,
-                       PersonFullName=person.FirstName+" "+person.LastName,
-                       DepartmentTitle=department.Title,
-                       IsBossOffice=personDepartment.IsBossOffice
-                   };
-        }
+        
         private IQueryable<PersonDepartmentDto> getListQuery()
         {
             return from personDepartment in db.PersonDepartmentList
@@ -50,7 +35,7 @@ namespace ITIL.Services
         }
         public async Task<IList<PersonDepartmentDto>> GetAllAsync(Guid id)
         {
-            var query = getListQuery(id);
+            var query = getListQuery().Where(t=>t.PersonId==id);
             return await query.ToListAsync();
         }
         public async Task<PersonDepartmentDto?> GetAsync(Guid id)

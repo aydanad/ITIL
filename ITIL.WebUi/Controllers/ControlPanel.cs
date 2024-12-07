@@ -287,9 +287,12 @@ namespace ITIL.WebUi.Controllers
         public async Task<IActionResult> CreatePersonDepartment(Guid id)
         {
             var departments = await _departmentServices.GetAllAsync();
+
             ViewBag.Departments = new SelectList(departments, "Id", "Title");
-            ViewBag.PersonId = id;
-            return View();
+            var model = new CreatePersonDepartmentDto();
+            model.PersonId = id;
+             
+            return View(model);
         }
         [HttpPost]
         public async Task<IActionResult> CreatePersonDepartment(CreatePersonDepartmentDto createPersonDepartmentDto)
@@ -299,6 +302,8 @@ namespace ITIL.WebUi.Controllers
                 await _personDepartmentServices.InsertAsync(createPersonDepartmentDto, default);
                 return RedirectToAction(nameof(PersonDepartmentList), new { id = createPersonDepartmentDto.PersonId });
             }
+            var departments = await _departmentServices.GetAllAsync();
+            ViewBag.Departments = new SelectList(departments, "Id", "Title");
             return View(createPersonDepartmentDto);
         }
 

@@ -35,8 +35,8 @@
 						<td>@personDepartment.DepartmentTitle</td>
 						<td>@personDepartment.IsBossOffice</td>
 						<td>
-							<a class="btn btn-info" asp-action="UpdatePersonDepartment" asp-route-personid="@ViewBag.PersonId" asp-route-id="@personDepartment.Id">ویرایش</a>
-							<a class="btn btn-danger" asp-action="RemovePersonDepartment" asp-route-personid="@ViewBag.PersonId" asp-route-id="@personDepartment.Id">حذف</a>
+							<a class="btn btn-info" asp-action="UpdatePersonDepartment" asp-route-personid="@personDepartment.PersonId" asp-route-id="@personDepartment.Id">ویرایش</a>
+							<a class="btn btn-danger" asp-action="RemovePersonDepartment" asp-route-personid="@personDepartment.PersonId" asp-route-id="@personDepartment.Id">حذف</a>
 						</td>
 					</tr>
 				}

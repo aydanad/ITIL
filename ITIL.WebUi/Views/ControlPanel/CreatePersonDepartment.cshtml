@@ -1,7 +1,7 @@
 ﻿@model ITIL.Services.Contract.CreatePersonDepartmentDto
 @{
     var errorMessage = TempData["ErrorMessage"];
-}
+} 
 @if (!string.IsNullOrEmpty(errorMessage?.ToString()))
 {
         <div class="alert alert-danger">@errorMessage</div>
@@ -24,7 +24,7 @@
                 <label asp-for="IsBossOffice">سمت:</label>
                 <input type="checkbox" asp-for="IsBossOffice" onclick="event.stopPropagation();" />
         </div>
-            <input type="hidden" id="PersonId" asp-for="PersonId" value="@ViewBag.PersonId" />
+            <input type="hidden" id="PersonId" asp-for="PersonId" value="@Model.PersonId" />
     </div>
     <div class="row mt-1">
         <div class="col-12">
