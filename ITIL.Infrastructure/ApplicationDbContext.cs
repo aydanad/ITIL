@@ -1,6 +1,8 @@
 ﻿using ITIL.Domin.Entities;
 using ITIL.Infrastructure.Config;
 using ITIL.Services;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -11,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace ITIL.Infrastructure
 {
-    public class ApplicationDbContext:DbContext,IApplicationDbContext
+    public class ApplicationDbContext:IdentityDbContext<IdentityUser, IdentityRole,string>,IApplicationDbContext
     {
         public ApplicationDbContext()
         {
