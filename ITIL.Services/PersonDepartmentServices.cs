@@ -43,6 +43,11 @@ namespace ITIL.Services
             var query = getListQuery().Where(t => t.Id == id);
             return await query.FirstOrDefaultAsync();
         }
+        public async Task<IList<PersonDepartmentDto>> GetAllByIdAsync(Guid id)
+        {
+            var query = getListQuery().Where(t => t.DepartmentId == id);
+            return await query.ToListAsync();
+        }
         public async Task<Guid?> InsertAsync(CreatePersonDepartmentDto createPersonDepartmentDto, CancellationToken cancellationToken)
         {
             var newEntity = new PersonDepartment();

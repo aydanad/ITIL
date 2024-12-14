@@ -307,5 +307,31 @@ namespace ITIL.WebUi.Controllers
             return View(createPersonDepartmentDto);
         }
 
+
+
+
+
+
+
+        public async Task<IActionResult> SearchPeople()
+        {
+            var cities = await _cityService.GetAllAsync();
+            ViewBag.Cities = new SelectList(cities, "Id", "Title");
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> SearchPeopleGetDepartments(Guid cityid)
+        {
+            var departments = await _departmentServices.GetAllByIdAsync(cityid);
+            return Json(departments);
+        }
+        [HttpGet]
+        public async Task<IActionResult> SearchPeopleGetPeople(Guid departmentId)
+        {
+            var people = await _personDepartmentServices.GetAllByIdAsync(departmentId);
+            return Json(people);
+        }
+
     }
 }

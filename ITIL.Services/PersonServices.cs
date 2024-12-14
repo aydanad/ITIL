@@ -26,6 +26,7 @@ namespace ITIL.Services
 					   FirstName = person.FirstName,
 					   LastName = person.LastName,
 					   NationalCode = person.NationalCode,
+					   PersonDepartmentCount = person.PersonDepartmentList.Count()
 				   };
 		}
 		public async Task<IList<PersonDto>> GetAllAsync()
@@ -33,7 +34,7 @@ namespace ITIL.Services
 			var query = getListQuery();
 			return await query.ToListAsync();
 		}
-		public async Task<PersonDto?> GetAsync(Guid id)
+        public async Task<PersonDto?> GetAsync(Guid id)
 		{
 			var query = getListQuery().Where(t => t.Id == id);
 			return await query.FirstOrDefaultAsync();

@@ -1,0 +1,86 @@
+﻿@model IEnumerable<ITIL.Services.Contract.PersonDepartmentDto>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>لیست اشخاص</title>
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>جستجوی دپارتمان‌ها و افراد</h1>
+
+        <form>
+            <div class="form-group">
+                <label for="citySelect">لطفا شهر را انتخاب کنید:</label>
+                @Html.DropDownList("CityId", (SelectList)ViewBag.Cities, "لطفا انتخاب کنید", new { @class = "form-control", id = "citySelect" })
+            </div>
+
+            <div class="form-group">
+                <label for="departmentSelect">لطفا دپارتمان را انتخاب کنید:</label>
+                @Html.DropDownList("DepartmentId", new SelectList(Enumerable.Empty<SelectListItem>()), "لطفا ابتدا شهر را انتخاب کنید", new { @class = "form-control", id = "departmentSelect" })
+            </div>
+
+            <button type="button" class="btn btn-primary" id="searchPeopleBtn">جستجوی افراد</button>
+        </form>
+
+        <h2 class="mt-4">افراد موجود در این دپارتمان:</h2>
+        <table class="table" id="peopleTable">
+            <thead>
+                <tr>
+                    <th>شناسه</th>
+                    <th>نام کامل</th>
+                    <th>مدیر</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('#citySelect').change(function () {
+                var cityId = $(this).val();
+                $('#departmentSelect').empty().append(new Option("لطفا ابتدا شهر را انتخاب کنید", ""));
+
+                if (cityId) {
+                    $.ajax({
+                        url: '@Url.Action("SearchPeopleGetDepartments", "ControlPanel")',
+                        type: 'GET',
+                        data: { cityId: cityId },
+                        success: function (data) {
+                            data.forEach(function (departments) {
+                                $('#departmentSelect').append(new Option(departments.title, departments.id));
+                            });
+                        }
+                    });
+                }
+            });
+            $('#searchPeopleBtn').click(function () {
+                var departmentId = $('#departmentSelect').val();
+                $('#peopleTable tbody').empty();
+
+                if (departmentId) {
+                    $.ajax({
+                        url: '@Url.Action("SearchPeopleGetPeople", "ControlPanel")',
+                        type: 'GET',
+                        data: { departmentId: departmentId },
+                        success: function (data) {
+                            data.forEach(function (people) {
+                                var row = `<tr>
+                                    <td>${people.id}</td>
+                                    <td>${people.personFullName}</td>
+                                    <td>${people.isBossOffice ? 'بله' : 'خیر'}</td>
+                                </tr>`;
+                                $('#peopleTable tbody').append(row);
+                            });
+                        }
+                    });
+                } else {
+                    alert("لطفا یک دپارتمان را انتخاب کنید.");
+                }
+            });
+        });
+    </script>
+</body>
+</html>

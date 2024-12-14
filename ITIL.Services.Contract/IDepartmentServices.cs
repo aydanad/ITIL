@@ -11,7 +11,8 @@ namespace ITIL.Services.Contract
 	public interface IDepartmentServices
 	{
 		Task<IList<DepartmentDto>> GetAllAsync();
-		Task<DepartmentDto?> GetAsync(Guid id);
+        Task<IList<DepartmentDto>> GetAllByIdAsync(Guid id);
+        Task<DepartmentDto?> GetAsync(Guid id);
 		Task<Guid?> InsertAsync(CreateDepartmentDto createDepartmentDto, CancellationToken cancellationToken);
 		Task<bool> UpdateAsync(UpdateDepartmentDto updateDepartmentDto, CancellationToken cancellationToken);
 		Task<bool> RemoveAsync(Guid id, CancellationToken cancellationToken);

@@ -13,7 +13,6 @@ namespace ITIL.Services.Contract
         public string PersonFullName { get; set; }
         public Guid DepartmentId { get; set; }
         public string DepartmentTitle { get; set; }
-
         public bool IsBossOffice { get; set; }
     }
     public class CreatePersonDepartmentDto

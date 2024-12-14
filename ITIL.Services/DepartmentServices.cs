@@ -35,7 +35,12 @@ namespace ITIL.Services
 			var query = GetListQuery();
 			return await query.ToListAsync();
 		}
-		public async Task<DepartmentDto?> GetAsync(Guid id)
+        public async Task<IList<DepartmentDto>> GetAllByIdAsync(Guid id)
+        {
+            var query = GetListQuery().Where(t=>t.CityId==id);
+            return await query.ToListAsync();
+        }
+        public async Task<DepartmentDto?> GetAsync(Guid id)
 		{
 			var query = GetListQuery().Where(t => t.Id == id);
 			return await query.FirstOrDefaultAsync();
